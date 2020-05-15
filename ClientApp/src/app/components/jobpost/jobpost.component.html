@@ -1,0 +1,153 @@
+<div class="jumbotron-fluid">
+  <div class="card">
+    <h2 class="card-header bg-warning text-center">
+      Post Your Requirement
+    </h2>
+    <div class="card-body card-bg">
+      <form [formGroup]="jobPostForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="w-100">
+              <mat-label>Work Type</mat-label>
+              <input type="text" placeholder="Work Type" matInput formControlName="worktype" [matAutocomplete]="jType">
+              <mat-autocomplete #jType="matAutocomplete" [displayWith]="displayJob">
+                <mat-option *ngFor="let work of worktypes" [value]="work">
+                  {{work.JobTitle}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error>
+                <span *ngIf="!jobPostForm.get('worktype').valid && jobPostForm.get('worktype').touched">Please select
+                  any Job Title !!!</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="w-100">
+              <mat-label>Locations</mat-label>
+              <input type="text" placeholder="Locations" matInput formControlName="location" [matAutocomplete]="loc">
+              <mat-autocomplete #loc="matAutocomplete" [displayWith]="displayLoc">
+                <mat-option *ngFor="let location of locations" [value]="location">
+                  {{location.locationName}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error>
+                <span *ngIf="!jobPostForm.get('location').valid && jobPostForm.get('location').touched">Please select a
+                  Location !!!</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="w-100">
+              <mat-label>Description</mat-label>
+              <textarea matInput placeholder="Describe requirement" formControlName="description"> </textarea>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="w-100">
+              <mat-label>Additional Details</mat-label>
+              <textarea matInput placeholder="Additional Info" formControlName="details"> </textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="w-100">
+              <mat-label>Email</mat-label>
+              <input type="email" matInput placeholder="Email" formControlName="email">
+              <mat-error>
+                <span *ngIf="!jobPostForm.get('email').valid && jobPostForm.get('email').touched">Please provide a valid
+                  email !!!</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="w-100">
+              <mat-label>Phone No</mat-label>
+              <input type="tel" matInput placeholder="Phone Number" formControlName="phone">
+              <mat-error>
+                <span *ngIf="!jobPostForm.get('phone').valid && jobPostForm.get('phone').touched">Please provide a phone
+                  number !!!</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="text-center">
+          <button mat-raised-button color="primary" class="btn btn-lg mt-2">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <mat-spinner class="spinner" *ngIf="isTableLoading"></mat-spinner>
+      <div class="example-container mat-elevation-z8">
+        <table mat-table [dataSource]="userWorkDetails" matSort matSortActive="created" matSortDisableClear
+          matSortDirection="desc">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="title" sticky>
+            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <td mat-cell *matCellDef="let element"> {{element.jobProfile?.jobTitle}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef> Location </th>
+            <td mat-cell *matCellDef="let element"> {{element.location?.locationName}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.jobDescription}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="phone" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef> Phone </th>
+            <td mat-cell *matCellDef="let element"> {{element.phoneNo}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="details">
+            <th mat-header-cell *matHeaderCellDef> Additional Details </th>
+            <td mat-cell *matCellDef="let element"> {{element.additionalDetails}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="options">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon color="secondary">more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click) = "editwork(element)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item (click) = "deletework(element)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<div class="card">
+    <div class="card-header text-center bg-secondary">
+        <div class="row">
+            <div class="col">
+                <mat-form-field class="mb-2 w-100">
+                    <mat-label>Select a work item</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let assignment of assignments" [value]="assignment.id"
+                            (onSelectionChange)="assignmentchanged($event,assignment)">
+                            {{assignment.assignedJob.id}} - {{assignment.assignedUserId}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field class="mb-2 w-100">
+                    <mat-label>Payment Type</mat-label>
+                    <mat-select [(value)]="paymentype">
+                        <mat-option *ngFor="let payment of paymentypes" [value]="payment">
+                            {{payment}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="paymentype === 'Cash' && assignmentUser !== undefined">
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="mb-2 w-100">
+                            <mat-label class="text-dark">Last Name:</mat-label>
+                            <input matInput type="text" name="last" #last="ngModel" class="form-control-plaintext"
+                                readonly [ngModel]="assignmentUser?.displayName">
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mb-2 w-100">
+                            <mat-label class="text-dark">Email:</mat-label>
+                            <input matInput type="text" name="email" #email="ngModel" class="form-control-plaintext"
+                                readonly [ngModel]="assignmentUser?.email">
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mb-2">
+                            <mat-label class="text-dark">Date</mat-label>
+                            <input matInput [matDatepicker]="picker" name="date" (dateChange)="dateEvent($event)">
+                            <mat-datepicker-toggle class="text-dark" matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mb-2">
+                            <mat-label class="text-dark">Amount</mat-label>
+                            <span matPrefix>Rs. &nbsp;</span>
+                            <input matInput type="text" #amount="ngModel" name="amount" class="form-control"
+                                (change)="valuechanged = true" [required]="valuechanged" [ngModel]="assignedAmount"
+                                placeholder="0.0">
+                            <mat-icon matSuffix>mode_edit</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <button mat-raised-button color="primary" type="submit" [disabled]="!valuechanged">Ok</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<mat-grid-list cols="2" rowHeight="2:1" gutterSize="2px">
+    <mat-grid-tile>
+        <div class="card carddeck">
+            <div class="card-header">
+                Payments Made
+            </div>
+            <div class="card-body overflow-auto">
+                <div *ngIf="payments?.length === 0">
+                    There are no Payments made......
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                        *ngFor="let payment of payments | paymentfilter : [currentUser]; let i = index">
+                        {{payment.payee}} - {{payment.paymentDate | date}}
+                        <span class="badge badge-primary badge-pill">{{payment.paymentAmount}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div class="card carddeck">
+            <div class="card-header">
+                Payments Recieved
+            </div>
+            <div class="card-body overflow-auto">
+                <div *ngIf="payments?.length === 0">
+                    There are no Payments received......
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                        *ngFor="let payment of payments | payeefilter : [currentUser]; let i = index">
+                        {{payment.payer}} - {{payment.paymentDate | date}}
+                        <span class="badge badge-primary badge-pill">{{payment.paymentAmount}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>

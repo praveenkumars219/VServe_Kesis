@@ -1,0 +1,91 @@
+<div class="jumbotron-fluid">
+    <div class="card text-white navbg vh-40">
+      <div class="card-body">
+        <form [formGroup]="jobPostForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="w-100">
+                <mat-label>Work Type</mat-label>
+                <input type="text" placeholder="Work Type" matInput formControlName="worktype"
+                  [matAutocomplete]="jType">
+                <mat-autocomplete #jType="matAutocomplete" [displayWith]="displayJob">
+                  <mat-option *ngFor="let work of worktypes | jobtitlefilter: [jobPostForm.get('worktype').value]" [value]="work">
+                    {{work.JobTitle}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>
+                  <span *ngIf="!jobPostForm.get('worktype').valid && jobPostForm.get('worktype').touched">Please select
+                    any Job Title !!!</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="w-100">
+                <mat-label>Locations</mat-label>
+                <input type="text" placeholder="Locations" matInput formControlName="location" [matAutocomplete]="loc">
+                <mat-autocomplete #loc="matAutocomplete" [displayWith]="displayLoc">
+                  <mat-option *ngFor="let location of locations" [value]="location">
+                    {{location.locationName}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>
+                  <span *ngIf="!jobPostForm.get('location').valid && jobPostForm.get('location').touched">Please select
+                    a
+                    Location !!!</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <button mat-raised-button color="btn-primary" class="btn btn-lg mt-2 bg-primary">
+                  Search
+              </button>
+            </div>
+          </div>
+        </form>
+        <div>
+          <h2>Details:</h2>
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let job of jobsResponse; let i = index">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="text-primary">
+                  {{job.id}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{job.jobProfile.jobTitle}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <form>
+                <div class="row">
+                  <div class="col">
+                    <mat-label class="text-warning">Description</mat-label>
+                    <textarea matInput class="form-control-plaintext" readonly
+                      value="{{job.jobDescription}}"></textarea>
+                  </div>
+                  <div class="col">
+                    <mat-label class="text-warning">Additional Details</mat-label>
+                    <textarea matInput class="form-control-plaintext" readonly
+                      value="{{job.additionalDetails}}"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <mat-label class="text-warning">Email</mat-label>
+                    <textarea matInput class="form-control-plaintext" readonly value="{{job.email}}">
+                        </textarea>
+                  </div>
+                  <div class="col">
+                    <mat-label class="text-warning">Contact Phone</mat-label>
+                    <textarea matInput class="form-control-plaintext" readonly value="{{job.phoneNo}}">
+                        </textarea>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2" (click)="saveAssignment(job)">Apply</button>
+              </form>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+      </div>
+    </div>
+</div>

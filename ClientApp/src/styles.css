@@ -1,0 +1,113 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.spinner{
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  background-size: 100%;
+  z-index: 100;
+}
+
+.indcarousel {
+  height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  background-image: url(assets/homenav3.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  background-size: cover;
+}
+
+.indcarousel-col {
+  flex: 50%;
+  max-width: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.indcarousel-col span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-height: 1.5em;
+  max-height: 4.5em;
+  vertical-align: middle;
+}
+
+.indcarousel-col-txt-lt {
+  max-width: 50%;
+  text-align: end;
+  direction: ltr;
+  float: right;
+  background: whitesmoke;
+  background-image: linear-gradient( 205deg, rgba(255,255,255,1) 68.3%, rgba(255,187,67,1) 71.6% );
+  padding: 1em;
+  margin: 0 0.5em;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 600;
+}
+
+
+
+.indcarousel-col-txt-rt {
+  max-width: 50%;
+  direction: ltr;
+  float: left;
+  padding: 1em;
+  background: whitesmoke;
+  background-image: linear-gradient( 335.9deg, rgba(255,187,67,1) 21.3%, rgba(255,255,255,1) 29.3% );
+  padding: 1em;
+  margin: 0 0.5em;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 600;
+}
+
+
+.example-container {
+  overflow: hidden;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #1b6ec2;
+  color: white;
+  text-align: center;
+  padding: 2px 0px;
+  z-index: 200;
+}
+
+.navbg {
+  background-color: #1b6ec2;
+  color: white;
+}

@@ -1,0 +1,13 @@
+.card-bg{
+    background-color: #1b6ec2;
+}
+
+table {
+    width: 100%;
+  }
+  
+
+  td, th {
+    width: 20%;
+    overflow-wrap: break-word;
+  }

@@ -1,0 +1,19 @@
+.vh-80{
+    height: 80vh;
+}
+
+.vh-40{
+    height: 50vh;
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+.vh-maxheight{
+ max-height: 85vh;
+ overflow-y: scroll;
+}
+
+.bg-cyan{
+    background-color:darkcyan;
+    margin: 1rem;
+}
